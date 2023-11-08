@@ -24,45 +24,75 @@ public class ZagZig extends CommandBase {
     private static final double kD = 0;
 
     private static final double speedMultiply = 0.5;
+    private static final double tolerance = 0.1;
 
   }
 
-  /** Creates a new ZagZig. */
   static private Drivetrain m_driveTrain;
-  private double 
+  static private double m_turnDegrees;
+  static private double m_turnRadius;
+  static private boolean m_left;
+
+  private double leftPosition;
+  private double rightPosition;
+
+  private double leftGoal;
+  private double rightGoal;
+  private double leftSpeed;
+  private double rightSpeed;
+
   private PIDController m_pidController = new PIDController(Config.kP, Config.kI, Config.kD);
-  public ZagZig(Drivetrain drivetrain, double turnDegrees, double turnRadius) {
+  public ZagZig(Drivetrain drivetrain, double turnDegrees, double turnRadius, boolean left) {
     m_driveTrain = drivetrain;
     m_turnDegrees = turnDegrees;
+    m_turnRadius = turnRadius;
+    m_left = left;
 
-    // Use addRequirements() here to declare subsystem dependencies.
+
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    double OutsideInsideRatio = (m_turnRadius + Config.kRobotWidth)/m_turnRadius;
+    leftSpeed = Config.speedMultiply;
+    rightSpeed = leftSpeed * OutsideInsideRatio;
+    leftGoal = toTicks((m_turnRadius) * (Math.toRadians(m_turnDegrees))); /* inside */
+    rightGoal = toTicks((m_turnRadius + Config.kRobotWidth) * (Math.toRadians(m_turnDegrees))); /* outside */
+    if (m_left == true){
+
+    } else {
+      double temp = leftGoal;
+      leftGoal = rightGoal;
+      rightGoal = temp;
+
+      temp = leftSpeed;
+      leftSpeed = rightSpeed;
+      rightSpeed = temp;
+    }
+    leftGoal = leftGoal + m_driveTrain.getLeftPosition();
+    rightGoal = rightGoal + m_driveTrain.getRightPosition();
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    leftPosition = m_driveTrain.getLeftPosition();
+    rightPosition = m_driveTrain.getRightPosition();
+    m_driveTrain.setLeftSpeed(leftSpeed);
+    m_driveTrain.setRightSpeed(rightSpeed);
+    }
+
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
-  }
-
-  public static double [] getTurnGoals(double turnDegrees, double turnRadius, boolean left){
-    double insideGoal = (turnRadius) * (Math.toRadians(turnDegrees));
-    double outsideGoal = (turnRadius + Config.kRobotWidth) * (Math.toRadians(turnDegrees));
-
-    
+    if ((leftGoal - leftPosition) <= Config.tolerance){
+      return true;
+    } else {
+      return false;
+    }
   }
 
 
