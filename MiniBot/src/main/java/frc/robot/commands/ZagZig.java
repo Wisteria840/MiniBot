@@ -23,12 +23,18 @@ public class ZagZig extends CommandBase {
     private static final double kI = 0;
     private static final double kD = 0;
 
+    private static final double speedMultiply = 0.5;
+
   }
+
   /** Creates a new ZagZig. */
-  private Drivetrain m_driveTrain;
+  static private Drivetrain m_driveTrain;
+  private double 
   private PIDController m_pidController = new PIDController(Config.kP, Config.kI, Config.kD);
-  public ZagZig(Drivetrain drivetrain) {
+  public ZagZig(Drivetrain drivetrain, double turnDegrees, double turnRadius) {
     m_driveTrain = drivetrain;
+    m_turnDegrees = turnDegrees;
+
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -40,7 +46,6 @@ public class ZagZig extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
   }
 
   // Called once the command ends or is interrupted.
@@ -56,11 +61,13 @@ public class ZagZig extends CommandBase {
   public static double [] getTurnGoals(double turnDegrees, double turnRadius, boolean left){
     double insideGoal = (turnRadius) * (Math.toRadians(turnDegrees));
     double outsideGoal = (turnRadius + Config.kRobotWidth) * (Math.toRadians(turnDegrees));
-    double[] turnGoals = {insideGoal, outsideGoal};
-    return turnGoals;
 
-
+    
   }
+
+
+  
+
 
   public static double toTicks(double distance){ /* input distance in inches output encoder ticks*/
     return (distance/(Config.kWheelDiameter*Math.PI)) * Config.kTicksPerRevolution;

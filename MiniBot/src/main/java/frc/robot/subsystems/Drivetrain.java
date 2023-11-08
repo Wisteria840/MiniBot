@@ -32,6 +32,22 @@ public class Drivetrain extends SubsystemBase {
     m_rightSecondary.setInverted(true);
   }
 
+  public void setSpeed(double speed, Boolean left){
+    if (left == true){
+      setLeftSpeed(speed);
+    } else {
+      setRightSpeed(speed);
+    }
+  }
+
+  public double getPosition(Boolean left){
+    if (left == true){
+      return getLeftPosition();
+    } else{
+      return getRightPosition();
+    }
+  }
+
   public void setRightSpeed(double rightSpeed){
     m_rightPrimary.set(rightSpeed);
   }
@@ -39,13 +55,14 @@ public class Drivetrain extends SubsystemBase {
   public void setLeftSpeed(double leftSpeed) {
     m_leftPrimary.set(leftSpeed);
   }
-
   public void setIdleMode(NeutralMode idleMode) {
     m_leftPrimary.setNeutralMode(idleMode);
     m_leftSecondary.setNeutralMode(idleMode);
     m_rightPrimary.setNeutralMode(idleMode);
     m_rightSecondary.setNeutralMode(idleMode);
   }
+
+ 
 
   public double getLeftPosition() {
     return m_leftPrimary.getSelectedSensorPosition();
@@ -54,6 +71,10 @@ public class Drivetrain extends SubsystemBase {
   public double getRightPosition() {
     return m_rightPrimary.getSelectedSensorPosition();
   }
+
+
+
+
 
   @Override
   public void periodic() {
