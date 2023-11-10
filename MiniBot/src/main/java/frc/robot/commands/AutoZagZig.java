@@ -12,10 +12,21 @@ import frc.robot.subsystems.Drivetrain;
 
 
 public class AutoZagZig extends SequentialCommandGroup {
+  private static final class Config{
+    private static final double kWheelDiameter = 12; /* there are two types of contries */
+    private static final double kTicksPerRevolution = 2048; 
+
+  }
   public AutoZagZig(Drivetrain drivetrain) {
     addCommands(
-      /* add the shit in here */
+      /* add the excrement in here */
+      new 
 
     );
   }
+
+  public static double toTicks(double distance){ /* input distance in inches output encoder ticks*/
+    return (distance/(Config.kWheelDiameter*Math.PI)) * Config.kTicksPerRevolution;
+  }
+
 }
