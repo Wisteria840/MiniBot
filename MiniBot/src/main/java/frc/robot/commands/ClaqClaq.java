@@ -13,7 +13,7 @@ public class ClaqClaq extends CommandBase {
     private static final double speedMultiply = 0.5;
     private static final double tolerance = 50; //in ticks
     private static final double wheelWidth = 6; //measure later in inches
-    private static final double wheelCircumference = (int) Math.round(wheelWidth * Math.PI);
+    private static final double wheelCircumference = wheelWidth * Math.PI;
     private static final double ticksPerRevolution = 2048;
   }
 
