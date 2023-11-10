@@ -21,7 +21,7 @@ public class ClaqClaq extends CommandBase {
 
   public ClaqClaq(double goal, Drivetrain drivetrain) { /* goal in feet*/
     m_driveTrain = drivetrain;
-    m_goal = goal + drivetrain.getLeftPosition();
+    m_goal = AutoZagZig.toTicks(goal) + drivetrain.getLeftPosition();
   }
 
   @Override

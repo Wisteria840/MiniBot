@@ -6,39 +6,47 @@ package frc.robot.commands;
 
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Drivetrain;
 
 
 public class viveLaRevolution extends CommandBase {
+  private static final class Config{
+    private static final double rotInHell = 0.5;
+    private static final double tolerance = 0.4;
+  }
 
-  /** Creates a new viveLaRevolution. */
   double m_goalDegree;
-  double m_robotWidth;
 
   double m_leftGoal;
   double m_rightGoal;
-  public viveLaRevolution(double goalDegree, double robotWidth) {
+  
+  double m_leftPosition;
+
+  Drivetrain m_driveTrain;
+
+  public viveLaRevolution(double goalDegree, Drivetrain drivetrain) {
     m_goalDegree = goalDegree;
-    m_robotWidth = robotWidth;
+    m_driveTrain = drivetrain;
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_rightGoal = (m_goalDegree/360) * (m_robotWidth * Math.PI);
-    m_leftGoal = -m_rightGoal;
+    m_rightGoal = AutoZagZig.toTicks((m_goalDegree/360) * (AutoZagZig.Config.kRobotWidth * Math.PI));
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_leftPosition = m_driveTrain.getLeftPosition();
+    m_driveTrain.setLeftSpeed(Config.rotInHell);
+    m_driveTrain.setRightSpeed(-Config.rotInHell); /* be sure this negative sign is working */
+    
+  }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return (m_leftGoal - m_leftPosition) <= Config.tolerance;
   }
 }

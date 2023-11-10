@@ -4,23 +4,22 @@
 
 package frc.robot.commands;
 
-import java.sql.Driver;
 
-import edu.wpi.first.math.Drake;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Drivetrain;
 
 
 public class AutoZagZig extends SequentialCommandGroup {
-  private static final class Config{
-    private static final double kWheelDiameter = 12; /* there are two types of contries */
-    private static final double kTicksPerRevolution = 2048; 
+  public static final class Config{
+    public static final double kWheelDiameter = 12; /* there are two types of contries */
+    public static final double kTicksPerRevolution = 2048; 
+    public static final double kRobotWidth = 360;
+
 
   }
   public AutoZagZig(Drivetrain drivetrain) {
     addCommands(
-      /* add the excrement in here */
-      new 
+      new ClaqClaq(10, drivetrain)
 
     );
   }

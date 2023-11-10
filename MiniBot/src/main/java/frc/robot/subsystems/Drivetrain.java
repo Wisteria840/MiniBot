@@ -9,7 +9,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Drivetrain extends SubsystemBase {
+public class Drivetrain extends SubsystemBase {/* you are going have to fix this */
   private static final class Config {
     public static final int kRightPrimaryMotor = 1;
     public static final int kRightSecondaryMotor = 2;
