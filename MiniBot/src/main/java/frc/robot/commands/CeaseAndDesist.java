@@ -8,10 +8,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
 public class CeaseAndDesist extends CommandBase {
-  boolean dozer = true;
+  boolean dozer;
   Drivetrain m_drivetrain;
   public CeaseAndDesist(Drivetrain drivetrain) {
     m_drivetrain = drivetrain;
+    dozer = true;
   }
 
   @Override
