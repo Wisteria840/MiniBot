@@ -11,7 +11,7 @@ import frc.robot.subsystems.Drivetrain;
 
 public class AutoZagZig extends SequentialCommandGroup {
   public static final class Config{
-    public static final double kWheelDiameter = 12; /* there are two types of contries */
+    public static final double kWheelDiameter = 5; /* there are two types of contries */
     public static final double kTicksPerRevolution = 2048; 
     public static final double kRobotWidth = 360;
 

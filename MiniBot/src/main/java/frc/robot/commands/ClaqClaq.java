@@ -10,11 +10,9 @@ import frc.robot.subsystems.Drivetrain;
 
 public class ClaqClaq extends CommandBase {
   private static final class Config{
-    private static final double speedMultiply = 0.5;
-    private static final double tolerance = 50; //in ticks
+    private static final double speedMultiply = 0.2;
+    private static final double tolerance = 2; //in ticks
     private static final double wheelWidth = 6; //measure later in inches
-    private static final double wheelCircumference = wheelWidth * Math.PI;
-    private static final double ticksPerRevolution = 2048;
   }
 
   private double m_goal;
@@ -24,7 +22,7 @@ public class ClaqClaq extends CommandBase {
   private double m_error;
 
   public ClaqClaq(double goal, Drivetrain drivetrain) { /* goal in inches*/
-    m_goal = ((goal * Config.ticksPerRevolution) / Config.wheelCircumference);
+    m_goal = AutoZagZig.toTicks(goal);
     m_driveTrain = drivetrain;
     addRequirements(m_driveTrain);
   }
@@ -44,12 +42,13 @@ public class ClaqClaq extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    //m_driveTrain.setLeftSpeed(0);
-    //m_driveTrain.setRightSpeed(0);
+    m_driveTrain.setLeftSpeed(0);
+    m_driveTrain.setRightSpeed(0);
+    /* remove this later */
   }
 
   @Override
   public boolean isFinished() {
-    return (m_error >= -Config.tolerance) && (m_error <= Config.tolerance); /* might have to flip the signs */
+    return m_error <= Config.tolerance; /* might have to flip the signs */
   }
 }

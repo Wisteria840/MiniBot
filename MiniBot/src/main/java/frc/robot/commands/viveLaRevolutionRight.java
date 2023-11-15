@@ -12,8 +12,8 @@ import frc.robot.subsystems.Drivetrain;
 public class viveLaRevolutionRight extends CommandBase {
   private static final class Config{
     private static final double rotInHell = 0.5; //motor speed
-    private static final double tolerance = 50; // in ticks
-    private static final double robotWidth = 360; // measure later in inches
+    private static final double tolerance = 2; // in ticks
+    private static final double robotWidth = 30; // measure later in inches
     private static final double circumference = robotWidth * Math.PI;
     private static final double ticksPerRevolution = 2048;
   }
@@ -48,12 +48,12 @@ public class viveLaRevolutionRight extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    //m_driveTrain.setLeftSpeed(0);
-    //m_driveTrain.setRightSpeed(0);
+    m_driveTrain.setLeftSpeed(0);
+    m_driveTrain.setRightSpeed(0);
   }
 
   @Override
   public boolean isFinished() {
-    return (m_error >= -Config.tolerance) && (m_error <= Config.tolerance);
+    return m_error <= Config.tolerance;
   }
 }

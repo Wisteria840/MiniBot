@@ -5,13 +5,14 @@
 package frc.robot.commands;
 
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
 public class ZagZig extends CommandBase {
   private static final class Config{
     
-    private static final double speedMultiply = 0.5;
+    private static final double speedMultiply = 0.1;
     private static final double tolerance = 0.1;
 
   }
@@ -43,29 +44,42 @@ public class ZagZig extends CommandBase {
 
   @Override
   public void initialize() {
-    double outsideInsideRatio = (m_turnRadius + kRobotWidth)/(m_turnDegrees);
+    double outsideInsideRatio = (m_turnRadius + kRobotWidth)/(m_turnRadius);
     leftGoal = AutoZagZig.toTicks((m_turnRadius) * (Math.toRadians(m_turnDegrees))); /* inside */
     leftSpeed = Config.speedMultiply;
-    rightSpeed = leftGoal * outsideInsideRatio;
+    rightSpeed = leftSpeed * outsideInsideRatio;
+    SmartDashboard.putNumber("leftSpeed", leftSpeed);
+    SmartDashboard.putNumber("RightSpeed", rightSpeed);
+    SmartDashboard.putNumber("outsideInsideRation", outsideInsideRatio);
+    
+
     if (m_left == true){
       
     } else {
       temp = leftSpeed;
       leftSpeed = rightSpeed;
-      rightSpeed = leftSpeed;
+      rightSpeed = temp;
     }
     leftGoal = leftGoal + m_driveTrain.getLeftPosition();
+    SmartDashboard.putNumber("leftGoal", leftGoal);
+
   }
 
   @Override
   public void execute() {
     leftPosition = m_driveTrain.getLeftPosition();
+    SmartDashboard.putNumber("Error", (leftGoal - leftPosition));
+    SmartDashboard.putNumber("Position", leftPosition);
     m_driveTrain.setLeftSpeed(leftSpeed);
     m_driveTrain.setRightSpeed(rightSpeed);
     }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    /* remove later */
+    m_driveTrain.setLeftSpeed(0);
+    m_driveTrain.setRightSpeed(0);
+  }
 
   @Override
   public boolean isFinished() {
