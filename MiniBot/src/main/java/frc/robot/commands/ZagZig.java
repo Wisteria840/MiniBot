@@ -28,6 +28,8 @@ public class ZagZig extends CommandBase {
   private double rightSpeed;
 
   private double kRobotWidth = AutoZagZig.Config.kRobotWidth;
+  private double temp;
+
 
 
   public ZagZig(Drivetrain drivetrain, double turnDegrees, double turnRadius, boolean left) {
@@ -41,17 +43,16 @@ public class ZagZig extends CommandBase {
 
   @Override
   public void initialize() {
-    double OutsideInsideRatio = (m_turnRadius + kRobotWidth)/m_turnRadius;
-    leftSpeed = Config.speedMultiply;
-    rightSpeed = leftSpeed * OutsideInsideRatio;
+    double outsideInsideRatio = (m_turnRadius + kRobotWidth)/(m_turnDegrees);
     leftGoal = AutoZagZig.toTicks((m_turnRadius) * (Math.toRadians(m_turnDegrees))); /* inside */
+    leftSpeed = Config.speedMultiply;
+    rightSpeed = leftGoal * outsideInsideRatio;
     if (m_left == true){
-
+      
     } else {
-      leftGoal = leftGoal * OutsideInsideRatio;
-
-      leftSpeed = leftSpeed * OutsideInsideRatio;
-      rightSpeed = rightSpeed / OutsideInsideRatio;
+      temp = leftSpeed;
+      leftSpeed = rightSpeed;
+      rightSpeed = leftSpeed;
     }
     leftGoal = leftGoal + m_driveTrain.getLeftPosition();
   }
