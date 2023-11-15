@@ -26,8 +26,8 @@ public class SimpleAuto extends SequentialCommandGroup {
       new ClaqClaq(38.891, drivetrain),
       new LeftSpin(45, drivetrain),
       //release cone
-      new LeftSpin(180, drivetrain),
-      new CeaseAndDesist(drivetrain)
+      //go backwards
+      new LeftSpin(180, drivetrain)
     );
   }
 }
