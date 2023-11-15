@@ -50,6 +50,6 @@ public class ClaqClaq extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return (m_error >= -Config.tolerance) && (m_error <= Config.tolerance); /* might have to flip the signs */
+    return m_error <= Config.tolerance; /* might have to flip the signs */
   }
 }
