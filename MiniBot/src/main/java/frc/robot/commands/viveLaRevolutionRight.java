@@ -5,13 +5,14 @@
 package frc.robot.commands;
 
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
 
 public class viveLaRevolutionRight extends CommandBase {
   private static final class Config{
-    private static final double rotInHell = 0.5; //motor speed
+    private static final double rotInHell = 0.1; //motor speed
     private static final double tolerance = 2; // in ticks
     private static final double robotWidth = 30; // measure later in inches
     private static final double circumference = robotWidth * Math.PI;
@@ -26,8 +27,7 @@ public class viveLaRevolutionRight extends CommandBase {
   double m_error;
 
   public viveLaRevolutionRight(double goalDegree, Drivetrain drivetrain) {
-    m_goalDegree = Math.toRadians(goalDegree);
-    m_leftGoal = (Config.ticksPerRevolution * ((0.5 * Config.robotWidth) * m_goalDegree)) / Config.circumference;
+    m_leftGoal = AutoZagZig.toTicks((goalDegree/360) * AutoZagZig.Config.kRobotWidth);
     m_driveTrain = drivetrain;
     addRequirements(m_driveTrain);
   }
@@ -35,14 +35,17 @@ public class viveLaRevolutionRight extends CommandBase {
   @Override
   public void initialize() {
     m_initalLeftPosition = m_driveTrain.getLeftPosition();
+    
   }
 
   @Override
   public void execute() {
+    SmartDashboard.putNumber("Left Goal", m_leftGoal);
+    SmartDashboard.putNumber("left Position", m_currentLeftPosition);
     m_currentLeftPosition = m_driveTrain.getLeftPosition() - m_initalLeftPosition;
     m_error = m_leftGoal - m_currentLeftPosition;
     m_driveTrain.setLeftSpeed(Config.rotInHell);
-    m_driveTrain.setRightSpeed(-Config.rotInHell); /* be sure this negative sign is working */
+    m_driveTrain.setRightSpeed(Config.rotInHell * -1); /* be sure this negative sign is working */
     
   }
 

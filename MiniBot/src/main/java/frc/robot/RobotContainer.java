@@ -6,9 +6,9 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutoZagZig;
+import frc.robot.commands.viveLaRevolutionRight;
 import frc.robot.commands.ClaqClaq;
 import frc.robot.commands.ZagZig;
-import frc.robot.commands.viveLaRevolutionRight;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -25,6 +25,7 @@ public class RobotContainer {
   private final Drivetrain m_driveTrain = new Drivetrain();
   private final ZagZig m_zagZig = new ZagZig(m_driveTrain, 90, 360, false);
   private final ClaqClaq m_claqClaq = new ClaqClaq(60, m_driveTrain);
+  private final viveLaRevolutionRight m_ViveLaRevolutionRight = new viveLaRevolutionRight(-90, m_driveTrain);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -56,6 +57,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return m_claqClaq;
+    return m_ViveLaRevolutionRight;
   }
 }
