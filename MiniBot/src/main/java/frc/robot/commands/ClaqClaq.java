@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
@@ -18,24 +19,27 @@ public class ClaqClaq extends CommandBase {
   private double m_goal;
   private Drivetrain m_driveTrain;
   private double m_initalPosition;
-  private double m_currentPosition;
-  private double m_error;
 
   public ClaqClaq(double goal, Drivetrain drivetrain) { /* goal in inches*/
     m_goal = AutoZagZig.toTicks(goal);
+    SmartDashboard.putNumber("goal difference", m_goal);
+    
     m_driveTrain = drivetrain;
     addRequirements(m_driveTrain);
   }
 
   @Override
   public void initialize() {
-    m_initalPosition = m_driveTrain.getRightPosition();
+    m_initalPosition = m_driveTrain.getLeftPosition();
+    m_goal = m_initalPosition + m_goal;
+    SmartDashboard.putNumber("Initial Position", m_initalPosition);
+    
+    SmartDashboard.putNumber("Goal", m_goal);
   }
 
   @Override
   public void execute() {
-    m_currentPosition = m_driveTrain.getRightPosition() - m_initalPosition;
-    m_error = m_goal - m_currentPosition;
+    SmartDashboard.putNumber("Current Position", m_driveTrain.getLeftPosition());
     m_driveTrain.setLeftSpeed(Config.speedMultiply);
     m_driveTrain.setRightSpeed(Config.speedMultiply);
   }
@@ -49,6 +53,6 @@ public class ClaqClaq extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return m_error <= Config.tolerance; /* might have to flip the signs */
+    return m_goal - m_driveTrain.getLeftPosition() <= Config.tolerance; /* might have to flip the signs */
   }
 }

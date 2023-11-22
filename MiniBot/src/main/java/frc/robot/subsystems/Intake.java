@@ -37,5 +37,9 @@ public class Intake extends SubsystemBase {
   public void cone(){
     m_intakeMotor.set(Config.intakeSpeed * -1); /* check if this is the right direction */
   }
+
+  public void halt(){
+    m_intakeMotor.set(0);
+  }
   }
 

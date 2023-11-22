@@ -33,12 +33,11 @@ public class ZagZig extends CommandBase {
 
 
 
-  public ZagZig(Drivetrain drivetrain, double turnDegrees, double turnRadius, boolean left) {
+  public ZagZig(Drivetrain drivetrain, double turnDegrees, double turnRadius) {
     m_driveTrain = drivetrain;
     m_turnDegrees = turnDegrees;
     m_turnRadius = turnRadius;
-    m_left = left;
-
+    
 
   }
 
@@ -51,6 +50,11 @@ public class ZagZig extends CommandBase {
     SmartDashboard.putNumber("leftSpeed", leftSpeed);
     SmartDashboard.putNumber("RightSpeed", rightSpeed);
     SmartDashboard.putNumber("outsideInsideRation", outsideInsideRatio);
+    if (m_turnDegrees > 0){
+      m_left = true;
+    } else {
+      m_left = false;
+    }
     
 
     if (m_left == true){

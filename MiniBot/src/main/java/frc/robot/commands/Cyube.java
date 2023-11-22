@@ -41,7 +41,9 @@ public class Cyube extends CommandBase {
 
   
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_intake.halt();
+  }
 
 
   @Override

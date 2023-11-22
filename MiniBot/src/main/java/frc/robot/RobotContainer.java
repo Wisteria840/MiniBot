@@ -10,6 +10,9 @@ import frc.robot.commands.viveLaRevolutionRight;
 import frc.robot.commands.ClaqClaq;
 import frc.robot.commands.ZagZig;
 import frc.robot.subsystems.Drivetrain;
+
+import javax.swing.text.StyleContext.SmallAttributeSet;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -23,9 +26,9 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain m_driveTrain = new Drivetrain();
-  private final ZagZig m_zagZig = new ZagZig(m_driveTrain, 90, 360, false);
-  private final ClaqClaq m_claqClaq = new ClaqClaq(60, m_driveTrain);
-  private final viveLaRevolutionRight m_ViveLaRevolutionRight = new viveLaRevolutionRight(-90, m_driveTrain);
+  private final ZagZig m_zagZig = new ZagZig(m_driveTrain, 90, 360);
+  private final ClaqClaq m_claqClaq = new ClaqClaq(6000, m_driveTrain);
+  private final viveLaRevolutionRight m_ViveLaRevolutionRight = new viveLaRevolutionRight(90, m_driveTrain);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =

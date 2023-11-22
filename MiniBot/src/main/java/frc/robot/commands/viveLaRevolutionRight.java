@@ -24,28 +24,31 @@ public class viveLaRevolutionRight extends CommandBase {
   double m_initalLeftPosition;
   double m_currentLeftPosition;
   Drivetrain m_driveTrain;
-  double m_error;
+  double m_direction;
 
   public viveLaRevolutionRight(double goalDegree, Drivetrain drivetrain) {
-    m_leftGoal = AutoZagZig.toTicks((goalDegree/360) * AutoZagZig.Config.kRobotWidth);
+    m_leftGoal = Math.abs(AutoZagZig.toTicks(Math.toRadians(goalDegree) * (AutoZagZig.Config.kRobotWidth/2)));
     m_driveTrain = drivetrain;
     addRequirements(m_driveTrain);
+    m_direction = 1;
+    if (goalDegree < 0){
+      m_direction = -1;
+    }
   }
 
   @Override
   public void initialize() {
-    m_initalLeftPosition = m_driveTrain.getLeftPosition();
+    m_leftGoal = m_leftGoal + m_driveTrain.getLeftPosition();
+    
     
   }
 
   @Override
   public void execute() {
     SmartDashboard.putNumber("Left Goal", m_leftGoal);
-    SmartDashboard.putNumber("left Position", m_currentLeftPosition);
-    m_currentLeftPosition = m_driveTrain.getLeftPosition() - m_initalLeftPosition;
-    m_error = m_leftGoal - m_currentLeftPosition;
-    m_driveTrain.setLeftSpeed(Config.rotInHell);
-    m_driveTrain.setRightSpeed(Config.rotInHell * -1); /* be sure this negative sign is working */
+
+    m_driveTrain.setLeftSpeed(Config.rotInHell * m_direction);
+    m_driveTrain.setRightSpeed(Config.rotInHell * m_direction * -1); /* be sure this negative sign is working */
     
   }
 
@@ -57,6 +60,6 @@ public class viveLaRevolutionRight extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return m_error <= Config.tolerance;
+    return m_leftGoal - m_driveTrain.getLeftPosition() <= Config.tolerance;
   }
 }
