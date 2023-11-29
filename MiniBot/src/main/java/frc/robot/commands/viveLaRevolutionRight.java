@@ -12,11 +12,8 @@ import frc.robot.subsystems.Drivetrain;
 
 public class viveLaRevolutionRight extends CommandBase {
   private static final class Config{
-    private static final double rotInHell = 0.1; //motor speed
+    private static final double rotSped = 0.1; //motor speed
     private static final double tolerance = 2; // in ticks
-    private static final double robotWidth = 30; // measure later in inches
-    private static final double circumference = robotWidth * Math.PI;
-    private static final double ticksPerRevolution = 2048;
   }
 
   double m_goalDegree;
@@ -27,7 +24,7 @@ public class viveLaRevolutionRight extends CommandBase {
   double m_direction;
 
   public viveLaRevolutionRight(double goalDegree, Drivetrain drivetrain) {
-    m_leftGoal = Math.abs(AutoZagZig.toTicks(Math.toRadians(goalDegree) * (AutoZagZig.Config.kRobotWidth/2)));
+    m_leftGoal = Math.abs(Drivetrain.toTicks(Math.toRadians(goalDegree) * (Drivetrain.Config.kRobotWidth/2)));
     m_driveTrain = drivetrain;
     addRequirements(m_driveTrain);
     m_direction = 1;
@@ -47,8 +44,8 @@ public class viveLaRevolutionRight extends CommandBase {
   public void execute() {
     SmartDashboard.putNumber("Left Goal", m_leftGoal);
 
-    m_driveTrain.setLeftSpeed(Config.rotInHell * m_direction);
-    m_driveTrain.setRightSpeed(Config.rotInHell * m_direction * -1); /* be sure this negative sign is working */
+    m_driveTrain.setLeftSpeed(Config.rotSped * m_direction);
+    m_driveTrain.setRightSpeed(Config.rotSped * m_direction * -1); /* be sure this negative sign is working */
     
   }
 

@@ -7,14 +7,20 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivetrain extends SubsystemBase {/* you are going have to fix this */
-  private static final class Config {
-    public static final int kRightPrimaryMotor = 1;
-    public static final int kRightSecondaryMotor = 2;
-    public static final int kLeftPrimaryMotor = 3;
-    public static final int kLeftSecondaryMotor = 4;
+  public static final class Config {
+    public static final int kRightPrimaryMotor = 3;
+    public static final int kRightSecondaryMotor = 4;
+    public static final int kLeftPrimaryMotor = 1;
+    public static final int kLeftSecondaryMotor = 2;
+
+    public static final double kWheelDiameter = 6; /* there are two types of contries */
+    public static final double kTicksPerRevolution = 2048; 
+    public static final double kRobotWidth = 23;
   }
 
   private WPI_TalonFX m_rightPrimary = new WPI_TalonFX(Config.kRightPrimaryMotor);
@@ -28,25 +34,10 @@ public class Drivetrain extends SubsystemBase {/* you are going have to fix this
   public Drivetrain() {
     m_leftSecondary.follow(m_leftPrimary);
     m_rightSecondary.follow(m_rightPrimary);
-    m_rightPrimary.setInverted(true);
-    m_rightSecondary.setInverted(true);
+    m_leftPrimary.setInverted(true);
+    m_leftSecondary.setInverted(true);
   }
 
-  public void setSpeed(double speed, Boolean left){
-    if (left == true){
-      setLeftSpeed(speed);
-    } else {
-      setRightSpeed(speed);
-    }
-  }
-
-  public double getPosition(Boolean left){
-    if (left == true){
-      return getLeftPosition();
-    } else{
-      return getRightPosition();
-    }
-  }
 
   public void setRightSpeed(double rightSpeed){
     m_rightPrimary.set(rightSpeed);
@@ -70,6 +61,11 @@ public class Drivetrain extends SubsystemBase {/* you are going have to fix this
 
   public double getRightPosition() {
     return m_rightPrimary.getSelectedSensorPosition();
+  }
+
+  public static double toTicks(double distance){ /* input distance in inches output encoder ticks*/
+    return (distance/(Config.kWheelDiameter*Math.PI)) * Config.kTicksPerRevolution;
+    
   }
 
 

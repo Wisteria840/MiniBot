@@ -27,7 +27,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain m_driveTrain = new Drivetrain();
   private final ZagZig m_zagZig = new ZagZig(m_driveTrain, 90, 360);
-  private final ClaqClaq m_claqClaq = new ClaqClaq(6000, m_driveTrain);
+  private final ClaqClaq m_claqClaq = new ClaqClaq(83, m_driveTrain);
   private final viveLaRevolutionRight m_ViveLaRevolutionRight = new viveLaRevolutionRight(90, m_driveTrain);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -60,6 +60,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return m_ViveLaRevolutionRight;
+    return m_claqClaq;
   }
 }
