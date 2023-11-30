@@ -12,7 +12,7 @@ import frc.robot.subsystems.Drivetrain;
 public class ZagZig extends CommandBase {
   private static final class Config{
     
-    private static final double speedMultiply = 0.1;
+    private static final double speedMultiply = 0.05;
     private static final double tolerance = 0.1;
 
   }

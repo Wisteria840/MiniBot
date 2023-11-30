@@ -5,6 +5,8 @@
 package frc.robot.commands;
 
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
@@ -21,20 +23,18 @@ public class viveLaRevolutionRight extends CommandBase {
   double m_initalLeftPosition;
   double m_currentLeftPosition;
   Drivetrain m_driveTrain;
-  double m_direction;
 
   public viveLaRevolutionRight(double goalDegree, Drivetrain drivetrain) {
-    m_leftGoal = Math.abs(Drivetrain.toTicks(Math.toRadians(goalDegree) * (Drivetrain.Config.kRobotWidth/2)));
+    
+    m_leftGoal = (Drivetrain.toTicks(Math.toRadians(goalDegree)) * (Drivetrain.Config.kRobotWidth/2));
     m_driveTrain = drivetrain;
     addRequirements(m_driveTrain);
-    m_direction = 1;
-    if (goalDegree < 0){
-      m_direction = -1;
-    }
+    m_driveTrain.setIdleMode(NeutralMode.Coast);
   }
 
   @Override
   public void initialize() {
+    SmartDashboard.putNumber("start position", m_driveTrain.getLeftPosition());
     m_leftGoal = m_leftGoal + m_driveTrain.getLeftPosition();
     
     
@@ -44,8 +44,8 @@ public class viveLaRevolutionRight extends CommandBase {
   public void execute() {
     SmartDashboard.putNumber("Left Goal", m_leftGoal);
 
-    m_driveTrain.setLeftSpeed(Config.rotSped * m_direction);
-    m_driveTrain.setRightSpeed(Config.rotSped * m_direction * -1); /* be sure this negative sign is working */
+    m_driveTrain.setLeftSpeed(Config.rotSped);
+    m_driveTrain.setRightSpeed(-Config.rotSped); /* be sure this negative sign is working */
     
   }
 
@@ -53,6 +53,7 @@ public class viveLaRevolutionRight extends CommandBase {
   public void end(boolean interrupted) {
     m_driveTrain.setLeftSpeed(0);
     m_driveTrain.setRightSpeed(0);
+    SmartDashboard.putNumber("end position", m_driveTrain.getLeftPosition());
   }
 
   @Override

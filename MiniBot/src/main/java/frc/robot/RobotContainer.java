@@ -8,6 +8,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutoZagZig;
 import frc.robot.commands.viveLaRevolutionRight;
 import frc.robot.commands.ClaqClaq;
+import frc.robot.commands.LeftSpin;
 import frc.robot.commands.ZagZig;
 import frc.robot.subsystems.Drivetrain;
 
@@ -26,9 +27,10 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain m_driveTrain = new Drivetrain();
-  private final ZagZig m_zagZig = new ZagZig(m_driveTrain, 90, 360);
-  private final ClaqClaq m_claqClaq = new ClaqClaq(83, m_driveTrain);
+  private final ZagZig m_zagZig = new ZagZig(m_driveTrain, 90, 4);
+  private final ClaqClaq m_claqClaq = new ClaqClaq(30, m_driveTrain);
   private final viveLaRevolutionRight m_ViveLaRevolutionRight = new viveLaRevolutionRight(90, m_driveTrain);
+  private final LeftSpin m_leftSpin = new LeftSpin(90, m_driveTrain);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -60,6 +62,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return m_claqClaq;
+    return m_zagZig;
   }
 }

@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
@@ -13,24 +15,33 @@ public class ClaqClaq extends CommandBase {
   private static final class Config{
     private static final double speedMultiply = 0.2;
     private static final double tolerance = 2; //in ticks
+    
   }
 
   private double m_goal;
   private Drivetrain m_driveTrain;
 
-  public ClaqClaq(double goal, Drivetrain drivetrain) { /* goal in inches*/
+  private double m_initalLeftPosition;
 
+  public ClaqClaq(double goal, Drivetrain drivetrain) { /* goal in inches*/
+    
     
     m_driveTrain = drivetrain;
     m_goal = goal;
+    m_driveTrain.setIdleMode(NeutralMode.Brake);;
+    
+    
     
     addRequirements(m_driveTrain);
   }
 
   @Override
   public void initialize() {
+    
     SmartDashboard.putNumber("start position", m_driveTrain.getLeftPosition());
-    m_goal = Drivetrain.toTicks(m_goal) + m_driveTrain.getLeftPosition();
+    m_initalLeftPosition = m_driveTrain.getLeftPosition();
+    m_goal = (Drivetrain.toTicks(m_goal)) + m_driveTrain.getLeftPosition();
+    SmartDashboard.putNumber("m_goal", m_goal);
   }
 
   @Override
@@ -47,6 +58,7 @@ public class ClaqClaq extends CommandBase {
     m_driveTrain.setLeftSpeed(0);
     m_driveTrain.setRightSpeed(0);
     SmartDashboard.putNumber("end posotion", m_driveTrain.getLeftPosition());
+
     /* remove this later */
   }
 

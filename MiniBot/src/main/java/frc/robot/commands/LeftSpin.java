@@ -6,56 +6,51 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class LeftSpin extends CommandBase {
-  /** Creates a new LeftSpin. */
   private static final class Config{
-    private static final double rotInHell = 0.5; //motor speed
+    private static final double rotSped = 0.1; //motor speed
     private static final double tolerance = 2; // in ticks
-    private static final double robotWidth = 30; // measure later in inches
-    private static final double circumference = robotWidth * Math.PI;
-    private static final double ticksPerRevolution = 2048;
   }
 
   double m_goalDegree;
   double m_rightGoal;
-  double m_initialRightPosition;
-  double m_currentRightPosition;
   Drivetrain m_driveTrain;
-  double m_error;
+
   public LeftSpin(double goalDegree, Drivetrain drivetrain) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    m_goalDegree = Math.toRadians(goalDegree);
-    m_rightGoal = (Config.ticksPerRevolution * ((0.5 * Config.robotWidth) * m_goalDegree)) / Config.circumference;
+    
+    m_rightGoal = (Drivetrain.toTicks(Math.toRadians(goalDegree)) * (Drivetrain.Config.kRobotWidth/2));
     m_driveTrain = drivetrain;
     addRequirements(m_driveTrain);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_initialRightPosition = m_driveTrain.getRightPosition();
+    SmartDashboard.putNumber("start position", m_driveTrain.getRightPosition());
+    m_rightGoal = m_rightGoal + m_driveTrain.getRightPosition();
+    
+    
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_currentRightPosition = m_driveTrain.getRightPosition() - m_initialRightPosition;
-    m_error = m_rightGoal - m_currentRightPosition;
-    m_driveTrain.setLeftSpeed(-Config.rotInHell);
-    m_driveTrain.setRightSpeed(Config.rotInHell); 
+    SmartDashboard.putNumber("right goal", m_rightGoal);
+
+    m_driveTrain.setLeftSpeed(-Config.rotSped);
+    m_driveTrain.setRightSpeed(Config.rotSped); /* be sure this negative sign is working */
+    
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     m_driveTrain.setLeftSpeed(0);
     m_driveTrain.setRightSpeed(0);
+    SmartDashboard.putNumber("end position", m_driveTrain.getRightPosition());
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_error <= Config.tolerance;
+    return m_rightGoal - m_driveTrain.getRightPosition() <= Config.tolerance;
   }
-}
+  }

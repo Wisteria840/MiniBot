@@ -21,6 +21,7 @@ public class Drivetrain extends SubsystemBase {/* you are going have to fix this
     public static final double kWheelDiameter = 6; /* there are two types of contries */
     public static final double kTicksPerRevolution = 2048; 
     public static final double kRobotWidth = 23;
+    private static final double gearRatio = 9.8;
   }
 
   private WPI_TalonFX m_rightPrimary = new WPI_TalonFX(Config.kRightPrimaryMotor);
@@ -64,7 +65,7 @@ public class Drivetrain extends SubsystemBase {/* you are going have to fix this
   }
 
   public static double toTicks(double distance){ /* input distance in inches output encoder ticks*/
-    return (distance/(Config.kWheelDiameter*Math.PI)) * Config.kTicksPerRevolution;
+    return (distance/(Config.kWheelDiameter*Math.PI)) * Config.kTicksPerRevolution * Config.gearRatio;
     
   }
 
