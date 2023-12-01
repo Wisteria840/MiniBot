@@ -1,21 +1,19 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
   private static final class Config{
-    private static final int intakeMotorID = 5;
-    private static final double intakeSpeed = 0.1;
+    private static final int kIntakeMotorID = 5; // change
+    private static final double kIntakeSpeed = 0.1;
+    private static final VictorSPXControlMode kControlMode = VictorSPXControlMode.PercentOutput;
+    
   }
-  private CANSparkMax m_intakeMotor = new CANSparkMax(Config.intakeMotorID, MotorType.kBrushless);
+  private VictorSPX m_intakeMotor = new VictorSPX(Config.kIntakeMotorID);
 
   public Intake() {}
 
@@ -27,7 +25,7 @@ public class Intake extends SubsystemBase {
     return new InstantCommand(this::cube, this);
   }
   public void cube(){
-    m_intakeMotor.set(Config.intakeSpeed); /* check if the cube or cone is in the positive direction. */
+    m_intakeMotor.set(Config.kControlMode, Config.kIntakeSpeed); /* check if the cube or cone is in the positive direction. */
   }
 
   public InstantCommand coone(){
@@ -35,11 +33,11 @@ public class Intake extends SubsystemBase {
   }
 
   public void cone(){
-    m_intakeMotor.set(Config.intakeSpeed * -1); /* check if this is the right direction */
+    m_intakeMotor.set(Config.kControlMode, Config.kIntakeMotorID * -1); /* check if this is the right direction */
   }
 
   public void halt(){
-    m_intakeMotor.set(0);
+    m_intakeMotor.set(Config.kControlMode, 0);
   }
   }
 

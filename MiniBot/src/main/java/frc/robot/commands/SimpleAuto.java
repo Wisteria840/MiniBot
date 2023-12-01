@@ -18,11 +18,11 @@ public class SimpleAuto extends SequentialCommandGroup {
     addCommands(
       new LeftSpin(45, drivetrain),
       new ClaqClaq(45.962, drivetrain),
-      new viveLaRevolutionRight(90, drivetrain),
+      new RightSpin(90, drivetrain),
       new ClaqClaq(84.853, drivetrain),
       new LeftSpin(90, drivetrain),
       new ClaqClaq(77.782, drivetrain),
-      new viveLaRevolutionRight(90, drivetrain),
+      new RightSpin(90, drivetrain),
       new ClaqClaq(38.891, drivetrain),
       new LeftSpin(45, drivetrain),
       //release cone

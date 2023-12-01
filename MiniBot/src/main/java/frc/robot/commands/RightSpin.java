@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
 
-public class viveLaRevolutionRight extends CommandBase {
+public class RightSpin extends CommandBase {
   private static final class Config{
     private static final double rotSped = 0.1; //motor speed
     private static final double tolerance = 2; // in ticks
@@ -24,7 +24,7 @@ public class viveLaRevolutionRight extends CommandBase {
   double m_currentLeftPosition;
   Drivetrain m_driveTrain;
 
-  public viveLaRevolutionRight(double goalDegree, Drivetrain drivetrain) {
+  public RightSpin(double goalDegree, Drivetrain drivetrain) {
     
     m_leftGoal = (Drivetrain.toTicks(Math.toRadians(goalDegree)) * (Drivetrain.Config.kRobotWidth/2));
     m_driveTrain = drivetrain;

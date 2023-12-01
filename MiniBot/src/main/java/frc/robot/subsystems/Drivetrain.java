@@ -1,14 +1,10 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.subsystems;
 
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivetrain extends SubsystemBase {/* you are going have to fix this */
@@ -18,20 +14,22 @@ public class Drivetrain extends SubsystemBase {/* you are going have to fix this
     public static final int kLeftPrimaryMotor = 1;
     public static final int kLeftSecondaryMotor = 2;
 
-    public static final double kWheelDiameter = 6; /* there are two types of contries */
-    public static final double kTicksPerRevolution = 2048; 
+    private static VictorSPXControlMode kControlMode = VictorSPXControlMode.PercentOutput;
+    
+    public static final double kWheelDiameter = 6;
+    public static final double kTicksPerRevolution = 2048; //Change this
     public static final double kRobotWidth = 23;
-    private static final double gearRatio = 9.8;
+    private static final double kGearRatio = 9.8; //Change 
+
   }
 
-  private WPI_TalonFX m_rightPrimary = new WPI_TalonFX(Config.kRightPrimaryMotor);
-  private WPI_TalonFX m_rightSecondary = new WPI_TalonFX(Config.kRightSecondaryMotor);
-  private WPI_TalonFX m_leftPrimary = new WPI_TalonFX(Config.kLeftPrimaryMotor);
-  private WPI_TalonFX m_leftSecondary = new WPI_TalonFX(Config.kLeftSecondaryMotor);
+  private VictorSPX m_rightPrimary = new VictorSPX(Config.kRightPrimaryMotor);
+  private VictorSPX m_rightSecondary = new VictorSPX(Config.kRightSecondaryMotor);
+  private VictorSPX m_leftPrimary = new VictorSPX(Config.kLeftPrimaryMotor);
+  private VictorSPX m_leftSecondary = new VictorSPX(Config.kLeftSecondaryMotor);
 
 
 
-  /** Creates a new Drivetrain. */
   public Drivetrain() {
     m_leftSecondary.follow(m_leftPrimary);
     m_rightSecondary.follow(m_rightPrimary);
@@ -41,11 +39,11 @@ public class Drivetrain extends SubsystemBase {/* you are going have to fix this
 
 
   public void setRightSpeed(double rightSpeed){
-    m_rightPrimary.set(rightSpeed);
+    m_rightPrimary.set(Config.kControlMode, rightSpeed);
   }
 
   public void setLeftSpeed(double leftSpeed) {
-    m_leftPrimary.set(leftSpeed);
+    m_leftPrimary.set(Config.kControlMode, leftSpeed);
   }
   public void setIdleMode(NeutralMode idleMode) {
     m_leftPrimary.setNeutralMode(idleMode);
@@ -65,7 +63,7 @@ public class Drivetrain extends SubsystemBase {/* you are going have to fix this
   }
 
   public static double toTicks(double distance){ /* input distance in inches output encoder ticks*/
-    return (distance/(Config.kWheelDiameter*Math.PI)) * Config.kTicksPerRevolution * Config.gearRatio;
+    return (distance/(Config.kWheelDiameter*Math.PI)) * Config.kTicksPerRevolution * Config.kGearRatio;
     
   }
 
@@ -75,6 +73,5 @@ public class Drivetrain extends SubsystemBase {/* you are going have to fix this
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
   }
 }
