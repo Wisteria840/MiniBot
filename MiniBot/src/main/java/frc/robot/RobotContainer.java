@@ -1,44 +1,40 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.AutoZagZig;
-import frc.robot.commands.viveLaRevolutionRight;
-import frc.robot.commands.ClaqClaq;
-import frc.robot.commands.LeftSpin;
-import frc.robot.commands.ZagZig;
+import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.Coone;
+import frc.robot.commands.Cyube;
 import frc.robot.subsystems.Drivetrain;
-
-import javax.swing.text.StyleContext.SmallAttributeSet;
-
+import frc.robot.subsystems.Intake;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and trigger mappings) should be declared here.
- */
+
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final Drivetrain m_driveTrain = new Drivetrain();
-  private final ZagZig m_zagZig = new ZagZig(m_driveTrain, 90, 4);
-  private final ClaqClaq m_claqClaq = new ClaqClaq(30, m_driveTrain);
-  private final viveLaRevolutionRight m_ViveLaRevolutionRight = new viveLaRevolutionRight(90, m_driveTrain);
-  private final LeftSpin m_leftSpin = new LeftSpin(90, m_driveTrain);
+  private static final class Config{ // all need to be changed
+    private static final int kJoystickPort = 1;
+    private static final int kConeButtonPort = 2;
+    private static final int kCubeButtonPort = 3;
+  }
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private Joystick m_joystick = new Joystick(Config.kJoystickPort);
+  private JoystickButton m_coneButton = new JoystickButton(m_joystick, Config.kConeButtonPort);
+  private JoystickButton m_cubeButton = new JoystickButton(m_joystick, Config.kCubeButtonPort);
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  private Drivetrain m_drivetrain = new Drivetrain();
+  private Intake m_intake = new Intake();
+
+  private ArcadeDrive m_arcadeDrive = new ArcadeDrive(m_joystick, m_drivetrain);
+  private Coone m_coone = new Coone(m_intake);
+  private Cyube m_cyube = new Cyube(m_intake);
+
+
+  
+  
+
   public RobotContainer() {
-    // Configure the trigger bindings
     configureBindings();
   }
 
@@ -52,16 +48,19 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+    m_coneButton.onTrue(m_coone);
+    m_cubeButton.onTrue(m_cyube);
+    m_turboButton.whileTrue(m_arcadeDrive);
 
   }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return m_zagZig;
+    return null;
   }
+
+  public Command getTeleopCommand(){
+    m_drivetrain.setDefaultCommand(m_arcadeDrive);
+    return null;
+  }
+
 }

@@ -17,7 +17,7 @@ public class Drivetrain extends SubsystemBase {/* you are going have to fix this
     private static VictorSPXControlMode kControlMode = VictorSPXControlMode.PercentOutput;
     
     public static final double kWheelDiameter = 6;
-    public static final double kTicksPerRevolution = 2048; //Change this
+    public static final double kTicksPerRevolution = 4096; 
     public static final double kRobotWidth = 23;
     private static final double kGearRatio = 9.8; //Change 
 
@@ -28,9 +28,10 @@ public class Drivetrain extends SubsystemBase {/* you are going have to fix this
   private VictorSPX m_leftPrimary = new VictorSPX(Config.kLeftPrimaryMotor);
   private VictorSPX m_leftSecondary = new VictorSPX(Config.kLeftSecondaryMotor);
 
-
+  public Double turboOrNah = 1.0;
 
   public Drivetrain() {
+
     m_leftSecondary.follow(m_leftPrimary);
     m_rightSecondary.follow(m_rightPrimary);
     m_leftPrimary.setInverted(true);
@@ -39,7 +40,7 @@ public class Drivetrain extends SubsystemBase {/* you are going have to fix this
 
 
   public void setRightSpeed(double rightSpeed){
-    m_rightPrimary.set(Config.kControlMode, rightSpeed);
+    m_rightPrimary.set(Config.kControlMode, rightSpeed * turboOrNah);
   }
 
   public void setLeftSpeed(double leftSpeed) {
