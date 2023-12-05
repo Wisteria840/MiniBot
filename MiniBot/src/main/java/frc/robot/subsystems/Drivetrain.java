@@ -2,19 +2,20 @@ package frc.robot.subsystems;
 
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivetrain extends SubsystemBase {/* you are going have to fix this */
   public static final class Config {
-    public static final int kRightPrimaryMotor = 3;
-    public static final int kRightSecondaryMotor = 4;
-    public static final int kLeftPrimaryMotor = 1;
-    public static final int kLeftSecondaryMotor = 2;
+    public static final int kRightPrimaryMotor = 6;
+    public static final int kRightSecondaryMotor = 8;
+    public static final int kLeftPrimaryMotor = 3;
+    public static final int kLeftSecondaryMotor = 7;
 
-    private static VictorSPXControlMode kControlMode = VictorSPXControlMode.PercentOutput;
+    private static TalonFXControlMode kControlMode = TalonFXControlMode.PercentOutput;
     
     public static final double kWheelDiameter = 6;
     public static final double kTicksPerRevolution = 4096; 
@@ -23,9 +24,9 @@ public class Drivetrain extends SubsystemBase {/* you are going have to fix this
 
   }
 
-  private VictorSPX m_rightPrimary = new VictorSPX(Config.kRightPrimaryMotor);
+  private TalonFX m_rightPrimary = new TalonFX(Config.kRightPrimaryMotor);
   private VictorSPX m_rightSecondary = new VictorSPX(Config.kRightSecondaryMotor);
-  private VictorSPX m_leftPrimary = new VictorSPX(Config.kLeftPrimaryMotor);
+  private TalonFX m_leftPrimary = new TalonFX(Config.kLeftPrimaryMotor);
   private VictorSPX m_leftSecondary = new VictorSPX(Config.kLeftSecondaryMotor);
 
   public Double turboOrNah = 1.0;

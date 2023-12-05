@@ -1,6 +1,7 @@
 package frc.robot;
 
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.ClaqClaq;
 import frc.robot.commands.Coone;
 import frc.robot.commands.Cyube;
 import frc.robot.subsystems.Drivetrain;
@@ -14,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
   private static final class Config{ // all need to be changed
-    private static final int kJoystickPort = 1;
+    private static final int kJoystickPort = 0;
     private static final int kConeButtonPort = 2;
     private static final int kCubeButtonPort = 3;
   }
@@ -29,6 +30,9 @@ public class RobotContainer {
   private ArcadeDrive m_arcadeDrive = new ArcadeDrive(m_joystick, m_drivetrain);
   private Coone m_coone = new Coone(m_intake);
   private Cyube m_cyube = new Cyube(m_intake);
+
+
+  private ClaqClaq m_claqClaq = new ClaqClaq(90, m_drivetrain);
 
 
   
@@ -50,16 +54,17 @@ public class RobotContainer {
   private void configureBindings() {
     m_coneButton.onTrue(m_coone);
     m_cubeButton.onTrue(m_cyube);
-    m_turboButton.whileTrue(m_arcadeDrive);
 
   }
 
   public Command getAutonomousCommand() {
+    //return m_claqClaq;
     return null;
   }
 
   public Command getTeleopCommand(){
     m_drivetrain.setDefaultCommand(m_arcadeDrive);
+  
     return null;
   }
 
