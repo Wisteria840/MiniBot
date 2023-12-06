@@ -51,8 +51,8 @@ public class ClaqClaq extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    m_driveTrain.setLeftSpeed(0);
-    m_driveTrain.setRightSpeed(0);
+    //m_driveTrain.setLeftSpeed(0);
+    //m_driveTrain.setRightSpeed(0);
     SmartDashboard.putNumber("end posotion", m_driveTrain.getLeftPosition());
 
     /* remove this later */

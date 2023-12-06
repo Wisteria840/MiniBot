@@ -4,11 +4,14 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class LeftSpin extends CommandBase {
   private static final class Config{
-    private static final double rotSped = 0.1; //motor speed
+    private static final double rotSped = 0.3; //motor speed
     private static final double tolerance = 2; // in ticks
   }
 
@@ -20,6 +23,7 @@ public class LeftSpin extends CommandBase {
     
     m_rightGoal = (Drivetrain.toTicks(Math.toRadians(goalDegree)) * (Drivetrain.Config.kRobotWidth/2));
     m_driveTrain = drivetrain;
+    m_driveTrain.setIdleMode(NeutralMode.Brake);
     addRequirements(m_driveTrain);
   }
 
@@ -42,8 +46,8 @@ public class LeftSpin extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    m_driveTrain.setLeftSpeed(0);
-    m_driveTrain.setRightSpeed(0);
+    //m_driveTrain.setLeftSpeed(0);
+    //m_driveTrain.setRightSpeed(0);
     SmartDashboard.putNumber("end position", m_driveTrain.getRightPosition());
   }
 

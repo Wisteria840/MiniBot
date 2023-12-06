@@ -18,9 +18,9 @@ public class Drivetrain extends SubsystemBase {/* you are going have to fix this
     private static TalonFXControlMode kControlMode = TalonFXControlMode.PercentOutput;
     
     public static final double kWheelDiameter = 6;
-    public static final double kTicksPerRevolution = 4096; 
-    public static final double kRobotWidth = 23;
-    private static final double kGearRatio = 9.8; //Change 
+    public static final double kTicksPerRevolution = 8192; 
+    public static final double kRobotWidth = 21.875;
+    private static final double kGearRatio = 1.0; //Change 
 
   }
 
@@ -29,7 +29,7 @@ public class Drivetrain extends SubsystemBase {/* you are going have to fix this
   private TalonFX m_leftPrimary = new TalonFX(Config.kLeftPrimaryMotor);
   private VictorSPX m_leftSecondary = new VictorSPX(Config.kLeftSecondaryMotor);
 
-  public Double turboOrNah = 1.0;
+  
 
   public Drivetrain() {
 
@@ -41,11 +41,11 @@ public class Drivetrain extends SubsystemBase {/* you are going have to fix this
 
 
   public void setRightSpeed(double rightSpeed){
-    m_rightPrimary.set(Config.kControlMode, rightSpeed * turboOrNah);
+    m_rightPrimary.set(Config.kControlMode, rightSpeed * -1);
   }
 
   public void setLeftSpeed(double leftSpeed) {
-    m_leftPrimary.set(Config.kControlMode, leftSpeed);
+    m_leftPrimary.set(Config.kControlMode, leftSpeed * -1);
   }
   public void setIdleMode(NeutralMode idleMode) {
     m_leftPrimary.setNeutralMode(idleMode);

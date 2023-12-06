@@ -4,6 +4,9 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.ClaqClaq;
 import frc.robot.commands.Coone;
 import frc.robot.commands.Cyube;
+import frc.robot.commands.LeftSpin;
+import frc.robot.commands.RightSpin;
+import frc.robot.commands.SimpleAuto;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj.Joystick;
@@ -32,7 +35,10 @@ public class RobotContainer {
   private Cyube m_cyube = new Cyube(m_intake);
 
 
-  private ClaqClaq m_claqClaq = new ClaqClaq(90, m_drivetrain);
+  private ClaqClaq m_claqClaq = new ClaqClaq(60, m_drivetrain);
+  private LeftSpin m_LeftSpin = new LeftSpin(90, m_drivetrain);
+  private RightSpin m_RightSpin = new RightSpin(90, m_drivetrain);
+  private SimpleAuto m_SimpleAuto = new SimpleAuto(m_drivetrain);
 
 
   
@@ -40,6 +46,7 @@ public class RobotContainer {
 
   public RobotContainer() {
     configureBindings();
+    m_drivetrain.setDefaultCommand(m_arcadeDrive);
   }
 
   /**
@@ -58,14 +65,8 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    //return m_claqClaq;
-    return null;
-  }
-
-  public Command getTeleopCommand(){
-    m_drivetrain.setDefaultCommand(m_arcadeDrive);
-  
-    return null;
+    return m_SimpleAuto;
+    //return null;
   }
 
 }
