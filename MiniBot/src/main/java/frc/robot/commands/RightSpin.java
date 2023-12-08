@@ -14,7 +14,7 @@ import frc.robot.subsystems.Drivetrain;
 
 public class RightSpin extends CommandBase {
   private static final class Config{
-    private static final double rotSped = 0.3; //motor speed
+    private static final double rotSped = 0.2; //motor speed
     private static final double tolerance = 2; // in ticks
   }
 
@@ -26,10 +26,13 @@ public class RightSpin extends CommandBase {
 
   public RightSpin(double goalDegree, Drivetrain drivetrain) {
     
-    m_leftGoal = (Drivetrain.toTicks(Math.toRadians(goalDegree)) * (Drivetrain.Config.kRobotWidth/2));
+    m_leftGoal = Drivetrain.toTicks((Math.toRadians(goalDegree)) * (Drivetrain.Config.kRobotWidth/2));
+    m_leftGoal = 5500;
+    SmartDashboard.putNumber("Goal distance", m_leftGoal);
     m_driveTrain = drivetrain;
-    addRequirements(m_driveTrain);
     m_driveTrain.setIdleMode(NeutralMode.Brake);
+    addRequirements(m_driveTrain);
+    
   }
 
   @Override

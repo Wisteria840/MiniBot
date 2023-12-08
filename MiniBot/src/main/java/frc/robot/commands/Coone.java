@@ -35,7 +35,7 @@ public class Coone extends CommandBase {
   
   @Override
   public void execute() {
-    m_currentTime = m_timer.get();
+    //m_currentTime = m_timer.get();
     m_intake.coone();
   }
 
@@ -48,6 +48,7 @@ public class Coone extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return m_initialTime - m_currentTime >= Config.inOutBurgerTime;
+    return false;
+    //return m_initialTime - m_currentTime >= Config.inOutBurgerTime;
   }
 }

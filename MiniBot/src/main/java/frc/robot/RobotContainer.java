@@ -7,6 +7,7 @@ import frc.robot.commands.Cyube;
 import frc.robot.commands.LeftSpin;
 import frc.robot.commands.RightSpin;
 import frc.robot.commands.SimpleAuto;
+import frc.robot.commands.ZagZigLeft;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj.Joystick;
@@ -19,8 +20,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   private static final class Config{ // all need to be changed
     private static final int kJoystickPort = 0;
-    private static final int kConeButtonPort = 2;
-    private static final int kCubeButtonPort = 3;
+    private static final int kConeButtonPort = 1;
+    private static final int kCubeButtonPort = 2;
   }
 
   private Joystick m_joystick = new Joystick(Config.kJoystickPort);
@@ -35,10 +36,11 @@ public class RobotContainer {
   private Cyube m_cyube = new Cyube(m_intake);
 
 
-  private ClaqClaq m_claqClaq = new ClaqClaq(60, m_drivetrain);
+  private ClaqClaq m_claqClaq = new ClaqClaq(5, m_drivetrain);
   private LeftSpin m_LeftSpin = new LeftSpin(90, m_drivetrain);
   private RightSpin m_RightSpin = new RightSpin(90, m_drivetrain);
-  private SimpleAuto m_SimpleAuto = new SimpleAuto(m_drivetrain);
+  private SimpleAuto m_SimpleAuto = new SimpleAuto(m_drivetrain, m_intake);
+  private ZagZigLeft m_ZagZigLeft = new ZagZigLeft(m_drivetrain,90 ,5);
 
 
   
@@ -47,6 +49,8 @@ public class RobotContainer {
   public RobotContainer() {
     configureBindings();
     m_drivetrain.setDefaultCommand(m_arcadeDrive);
+    // m_coneButton.onTrue(m_intake.coone());
+    // m_cubeButton.onTrue(m_intake.cyube());
   }
 
   /**
@@ -54,7 +58,7 @@ public class RobotContainer {
    * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
    * predicate, or via the named factories in {@link
    * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
+   * CommandXboxController Xbox}/{@li                                  nk edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
    * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
@@ -65,7 +69,7 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return m_SimpleAuto;
+    return m_coone;
     //return null;
   }
 
