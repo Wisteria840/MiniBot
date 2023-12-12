@@ -36,7 +36,7 @@ public class Cyube extends CommandBase {
   @Override
   public void execute() {
     m_currentTime = m_timer.get();
-    m_intake.cyube();
+    m_intake.cube();
   }
 
   
@@ -48,6 +48,6 @@ public class Cyube extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return m_initialTime - m_currentTime >= Config.inOutBurgerTime;
+    return m_currentTime - m_initialTime >= Config.inOutBurgerTime;
   }
 }

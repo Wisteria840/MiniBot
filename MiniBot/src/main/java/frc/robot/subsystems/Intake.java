@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Intake extends SubsystemBase {
   private static final class Config{
     private static final int kIntakeMotorID = 2; // change
-    private static final double kIntakeSpeed = 0.7;
+    private static final double kIntakeSpeed = 0.4;
     
   }
   private CANSparkMax m_intakeMotor = new CANSparkMax(Config.kIntakeMotorID, MotorType.kBrushless);
