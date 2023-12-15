@@ -24,11 +24,11 @@ public class RightSpin extends CommandBase {
   double m_currentLeftPosition;
   Drivetrain m_driveTrain;
 
-  public RightSpin(double goalDegree, Drivetrain drivetrain) {
+  public RightSpin(double goalDegree, Drivetrain drivetrain, double ticks) {
     
     m_leftGoal = Drivetrain.toTicks((Math.toRadians(goalDegree)) * (Drivetrain.Config.kRobotWidth/2));
-    m_leftGoal = 5500;
     SmartDashboard.putNumber("Goal distance", m_leftGoal);
+    m_leftGoal = ticks;
     m_driveTrain = drivetrain;
     m_driveTrain.setIdleMode(NeutralMode.Brake);
     addRequirements(m_driveTrain);

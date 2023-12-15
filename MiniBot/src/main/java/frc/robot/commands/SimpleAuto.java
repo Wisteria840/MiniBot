@@ -17,20 +17,19 @@ public class SimpleAuto extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new LeftSpin(90, drivetrain),
-      new RightSpin(90, drivetrain)
-      /*
-      new LeftSpin(45, drivetrain),
-      new ClaqClaq(15, drivetrain),
-      new RightSpin(90, drivetrain),
+      new LeftSpin(90, drivetrain,2500),
       new ClaqClaq(30, drivetrain),
-      new LeftSpin(90, drivetrain),
-      new ClaqClaq(30, drivetrain),
-      new RightSpin(90, drivetrain),
-      new LeftSpin(45, drivetrain),
-      //maybe new ClaqClaq(5, drivetrain),
-      new Brake(drivetrain),
-      new Cyube(intake) */
+      new RightSpin(90, drivetrain,8000),
+      new ClaqClaq(55, drivetrain),
+      new LeftSpin(90, drivetrain, 9000),
+      new ClaqClaq(45, drivetrain),
+      new RightSpin(90, drivetrain, 5000),
+      new ClaqClaq(25, drivetrain),
+      new Cyube(intake)
+      // new LeftSpin(45, drivetrain),
+      // //maybe new ClaqClaq(5, drivetrain),
+      // new Brake(drivetrain),
+      // new Cyube(intake)
       
     );
   }

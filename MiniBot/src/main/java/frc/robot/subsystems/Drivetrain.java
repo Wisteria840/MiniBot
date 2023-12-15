@@ -64,6 +64,7 @@ public class Drivetrain extends SubsystemBase {/* you are going have to fix this
     return m_rightPrimary.getSelectedSensorPosition();
   }
 
+
   public static double toTicks(double distance){ /* input distance in inches output encoder ticks*/
     return (distance/(Config.kWheelDiameter*Math.PI)) * Config.kTicksPerRevolution * Config.kGearRatio;
     

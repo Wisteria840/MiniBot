@@ -6,13 +6,14 @@ package frc.robot.commands;
 
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
 
 public class Cyube extends CommandBase {
   static final private class Config{
-    private final static double inOutBurgerTime = 5; /* however much time it takes to insert or extract */
+    private final static double inOutBurgerTime = 3; /* however much time it takes to insert or extract */
   }
   Intake m_intake;
   double m_initialTime;
@@ -29,6 +30,8 @@ public class Cyube extends CommandBase {
   public void initialize() {
     
     m_initialTime = m_timer.get();
+    m_timer.start();
+    SmartDashboard.putNumber("initial time", m_initialTime);
     m_currentTime = m_initialTime;
   }
 
@@ -36,18 +39,22 @@ public class Cyube extends CommandBase {
   @Override
   public void execute() {
     m_currentTime = m_timer.get();
+    SmartDashboard.putNumber("current time", m_currentTime);
     m_intake.cube();
   }
 
   
   @Override
   public void end(boolean interrupted) {
+    SmartDashboard.putNumber("currentTime", m_currentTime);
     m_intake.halt();
+    m_timer.stop();
+    m_timer.reset();
   }
 
 
   @Override
   public boolean isFinished() {
-    return m_currentTime - m_initialTime >= Config.inOutBurgerTime;
+    return m_timer.hasElapsed(Config.inOutBurgerTime);
   }
 }

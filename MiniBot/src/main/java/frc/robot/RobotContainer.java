@@ -36,9 +36,9 @@ public class RobotContainer {
   private Cyube m_cyube = new Cyube(m_intake);
 
 
-  private ClaqClaq m_claqClaq = new ClaqClaq(5, m_drivetrain);
-  private LeftSpin m_LeftSpin = new LeftSpin(90, m_drivetrain);
-  private RightSpin m_RightSpin = new RightSpin(90, m_drivetrain);
+  private ClaqClaq m_claqClaq = new ClaqClaq(30, m_drivetrain);
+  private LeftSpin m_LeftSpin = new LeftSpin(90, m_drivetrain,8192);
+  private RightSpin m_RightSpin = new RightSpin(90, m_drivetrain,3000);
   private SimpleAuto m_SimpleAuto = new SimpleAuto(m_drivetrain, m_intake);
   private ZagZigLeft m_ZagZigLeft = new ZagZigLeft(m_drivetrain,90 ,5);
 
@@ -69,7 +69,7 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return m_coone;
+    return m_SimpleAuto;
   }
 
 }

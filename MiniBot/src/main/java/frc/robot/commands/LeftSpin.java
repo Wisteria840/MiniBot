@@ -19,12 +19,12 @@ public class LeftSpin extends CommandBase {
   double m_rightGoal;
   Drivetrain m_driveTrain;
 
-  public LeftSpin(double goalDegree, Drivetrain drivetrain) {
+  public LeftSpin(double goalDegree, Drivetrain drivetrain,double ticks) {
     
     m_rightGoal = (Drivetrain.toTicks(Math.toRadians(goalDegree)) * (Drivetrain.Config.kRobotWidth/2));
-    m_rightGoal = 6900;
     SmartDashboard.putNumber("goal distance left spin", m_rightGoal);
     m_driveTrain = drivetrain;
+    m_rightGoal = ticks;
     m_driveTrain.setIdleMode(NeutralMode.Brake);
     addRequirements(m_driveTrain);
   }

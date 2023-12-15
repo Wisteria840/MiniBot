@@ -35,9 +35,9 @@ public class ClaqClaq extends CommandBase {
   @Override
   public void initialize() {
     
-    SmartDashboard.putNumber("start position", m_driveTrain.getLeftPosition());
+    SmartDashboard.putNumber("start left", m_driveTrain.getLeftPosition());
+    SmartDashboard.putNumber("start right", m_driveTrain.getRightPosition());
     m_goal = (Drivetrain.toTicks(m_goal)) + m_driveTrain.getLeftPosition();
-    SmartDashboard.putNumber("m_goal", m_goal);
   }
 
   @Override
@@ -53,7 +53,8 @@ public class ClaqClaq extends CommandBase {
   public void end(boolean interrupted) {
     //m_driveTrain.setLeftSpeed(0);
     //m_driveTrain.setRightSpeed(0);
-    SmartDashboard.putNumber("end posotion", m_driveTrain.getLeftPosition());
+    SmartDashboard.putNumber("end left", m_driveTrain.getLeftPosition());
+    SmartDashboard.putNumber("end right", m_driveTrain.getRightPosition());
 
     /* remove this later */
   }
